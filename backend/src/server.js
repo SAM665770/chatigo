@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/messages.routes.js";
+import { connectDB } from "./lib/db.js";
 
 dotenv.config({
   path: "./.env",
@@ -12,6 +13,8 @@ const app = express();
 const __dirname = path.resolve(); // gives the absolute path of the cwd
 
 const PORT = process.env.PORT || 3000;
+
+app.use(express.json()); // req.body
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
@@ -28,6 +31,10 @@ if (process.env.NODE_ENV === "production") {
 // In production, you want to serve everything from a single server - the backend serves both API routes and the frontend files
 // The dist folder contains the optimized, built version of your frontend application
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}`);
-});
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => console.log("MongoDB connection error:", err));
