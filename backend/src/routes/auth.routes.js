@@ -10,10 +10,10 @@ import { arcjetProtection } from "../middlewares/arcjet.middlewares.js";
 
 const router = express.Router();
 
-router.use(arcjetProtection)
+// router.use(arcjetProtection)
 
 router.post("/signup", signup);
-router.post("/login", arcjetProtection, login);
+router.post("/login",  login);
 router.post("/logout", logout);
 router.put("/update-profile", protectRoute, updateProfile);
 router.get("/check", protectRoute, (req, res) =>
