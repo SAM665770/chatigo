@@ -6,7 +6,7 @@ import {
   updateProfile,
 } from "../controllers/auth.controllers.js";
 import { protectRoute } from "../middlewares/auth.middlewares.js";
-import { arcjetProtection } from "../middlewares/arcjet.middlewares.js";
+import { arcjetProtection } from "../middlewares/arcjet.middlewares.js";  
 
 const router = express.Router();
 
