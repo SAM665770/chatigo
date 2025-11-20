@@ -46,7 +46,7 @@ export const signup = async (req, res) => {
         _id: newUser._id,
         fullName: newUser.fullName,
         email: newUser.email,
-        profileUser: newUser.profilePic,
+        profilePic: newUser.profilePic,
       });
 
       try {
@@ -84,7 +84,7 @@ export const login = async (req, res) => {
       _id: user._id,
       fullName: user.fullName,
       email: user.email,
-      profileUser: user.profilePic,
+      profilePic: user.profilePic,
     });
   } catch (error) {
     console.error("Error in login controller:", error);
@@ -102,6 +102,11 @@ export const updateProfile = async (req, res) => {
     const { profilePic } = req.body;
     if (!profilePic)
       return res.status(400).json({ message: "Profile pic is required" });
+
+    // Check if image is too large (base64 string length check)
+    if (profilePic.length > 10 * 1024 * 1024) { // ~10MB limit
+      return res.status(413).json({ message: "Image too large. Please choose a smaller image." });
+    }
 
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
     const userId = req.user._id;
@@ -121,6 +126,12 @@ export const updateProfile = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in update profile:", error);
+    
+    // Handle specific payload too large error
+    if (error.type === 'entity.too.large') {
+      return res.status(413).json({ message: "Image too large. Please choose a smaller image." });
+    }
+    
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
