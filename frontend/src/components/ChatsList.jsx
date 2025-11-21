@@ -24,7 +24,7 @@ function ChatsList() {
         >
           <div className="flex items-center gap-3">
             <div>
-              <div className="size-12 rounded-full">
+              <div className="size-12 rounded-full avatar avatar-online">
                 <img
                   src={chat.profilePic || "/avatar.png"}
                   alt={chat.fullName}

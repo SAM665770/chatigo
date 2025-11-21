@@ -21,7 +21,7 @@ const ContactList = () => {
         >
           <div className="flex items-center gap-3">
             <div>
-              <div className="size-12 rounded-full">
+              <div className="size-12 rounded- avatar avatar-online">
                 <img
                   src={contact.profilePic || "/avatar.png"}
                   alt={contact.fullName}

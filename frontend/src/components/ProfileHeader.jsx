@@ -4,28 +4,45 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 import { LoaderIcon } from "lucide-react";
 
+// Create audio object for click sound feedback (loaded once when module loads)
 const mouseClickSound = new Audio("/sounds/mouse-click.mp3");
 
 function ProfileHeader() {
   const { logout, authUser, updateProfile, isUpdatingProfilePic } =
     useAuthStore();
+
   const { isSoundEnabled, toggleSound } = useChatStore();
+  // Local state to store selected image preview before upload
   const [selectedImg, setSelectedImg] = useState(null);
 
+  // Reference to hidden file input element for programmatic triggering
   const fileInputRef = useRef(null);
 
+  // Handle profile picture upload process
   const handleImageUpload = (e) => {
+    // Get the first selected file from input
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) return; // Exit if no file selected
 
+    //Creates a FileReader instance (browser API for reading files)
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); // readAsDataURL() converts the file to a base64 string (data:image/jpeg;base64,...)
 
+    // Callback when file reading is complete
     reader.onloadend = async () => {
-      const base64Image = reader.result;
-      setSelectedImg(base64Image);
-      await updateProfile({ profilePic: base64Image });
+      const base64Image = reader.result; // Get base64 string
+      setSelectedImg(base64Image); // Update local preview
+      await updateProfile({ profilePic: base64Image }); // Upload to server
     };
+
+    // onloadend callback fires when file reading completes
+    // reader.result contains the base64 string
+    // setSelectedImg() updates local state for immediate preview
+    // updateProfile() sends base64 to server for permanent storage
+
+    // Flow:
+    // User selects file → FileReader converts to base64 → Local preview updates → Server upload happens
+    // Why base64? It allows sending image data as text in JSON requests without needing multipart form uploads.
   };
 
   return (
@@ -33,7 +50,8 @@ function ProfileHeader() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* AVATAR */}
-          <div className="avatar online">
+          <div className="avatar avatar-online">
+          {/* useRef enables the clean UX where clicking the avatar opens file selection. */}
             <button
               className="size-14 rounded-full overflow-hidden relative group"
               onClick={() => fileInputRef.current.click()}
