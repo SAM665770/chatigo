@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useChatStore } from "../store/useChatStore.js";
-import { LoaderIcon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import ChatHeader from "./ChatHeader.jsx";
 import NoChatHistoryPlaceholder from "./NoChatHistoryPlaceholder.jsx";
@@ -11,10 +10,17 @@ const ChatContainer = () => {
   const { messages, isMessagesLoading, getMessagesByUserId, selectedUser } =
     useChatStore();
   const { authUser } = useAuthStore();
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
   }, [getMessagesByUserId, selectedUser]);
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <>
@@ -51,12 +57,17 @@ const ChatContainer = () => {
                 </div>
               </div>
             ))}
+
+            {/* Scroll target */}
+            <div ref={messageEndRef} />
           </div>
-        ) : isMessagesLoading ? <MessagesLoadingSkeleton/> : (
+        ) : isMessagesLoading ? (
+          <MessagesLoadingSkeleton />
+        ) : (
           <NoChatHistoryPlaceholder name={selectedUser.fullName} />
         )}
       </div>
-      <MessageInput/>
+      <MessageInput />
     </>
   );
 };

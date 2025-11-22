@@ -28,9 +28,9 @@ function ProfileHeader() {
     const reader = new FileReader();
     reader.readAsDataURL(file); // readAsDataURL() converts the file to a base64 string (data:image/jpeg;base64,...)
 
-    // Callback when file reading is complete
+    // Event that fires when file reading completes (success or failure)
     reader.onloadend = async () => {
-      const base64Image = reader.result; // Get base64 string
+      const base64Image = reader.result; // Gets the converted base64 string from FileReader
       setSelectedImg(base64Image); // Update local preview
       await updateProfile({ profilePic: base64Image }); // Upload to server
     };
