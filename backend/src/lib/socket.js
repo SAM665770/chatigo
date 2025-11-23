@@ -19,6 +19,11 @@ const io = new Server(server, {
 // apply authentication middleware to all socket connections
 io.use(socketAuthMiddleware);
 
+// we will use this function to see if user is online or not
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId];
+}
+
 // ONLINE USER TRACKING SYSTEM
 // Map to store currently connected users: {userId: socketId}
 // This allows us to track who's online and send targeted messages
