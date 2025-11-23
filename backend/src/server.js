@@ -6,8 +6,8 @@ import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { app, server } from "./lib/socket.js";
 
-const app = express();
 const __dirname = path.resolve(); // gives the absolute path of the cwd
 
 const PORT = ENV.PORT || 3000;
@@ -28,12 +28,12 @@ if (ENV.NODE_ENV === "production") {
   });
 }
 // In development, you typically run your frontend and backend separately (frontend on one port, backend on another)
-// In production, you want to serve everything from a single server - the backend serves both API routes and the frontend files
+// In production, you want  to serve everything from a single server - the backend serves both API routes and the frontend files
 // The dist folder contains the optimized, built version of your frontend application
 
 connectDB()
   .then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running on port http://localhost:${PORT}`);
     });
   })
