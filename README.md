@@ -205,16 +205,16 @@ cd backend && npm start
 --------------
 
 ### Login Page
-![Login Page](./frontend\public\screenshots\login-page.png)
+![Login Page](./frontend/public/screenshots/login-page.png)
 
 ### Sign Up Page
-![Sign Up Page](./frontend\public\screenshots\sign-up-page.png)
+![Sign Up Page](./frontend/public/screenshots/sign-up-page.png)
 
 ### Chat Interface
-![Chat Interface](./frontend\public\screenshots\chat-page.png)
+![Chat Interface](./frontend/public/screenshots/chat-page.png)
 
 ### Contacts Tab
-![Contacts Tab](./frontend\public\screenshots\contacts-page.png)
+![Contacts Tab](./frontend/public/screenshots/contacts-page.png)
 
 
 📦 API Endpoints
