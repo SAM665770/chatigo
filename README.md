@@ -201,6 +201,24 @@ cd backend && npm start
 - Optimistic updates for better UX
 - Efficient re-renders with Zustand
 
+📸 Screenshots
+--------------
+
+### Login Page
+![Login Page](screenshots/login-page.png)
+
+### Sign Up Page
+![Sign Up Page](screenshots/signup-page.png)
+
+### Chat Interface
+![Chat Interface](screenshots/chat-interface.png)
+
+### Contacts Tab
+![Contacts Tab](screenshots/contacts-tab.png)
+
+### Profile Settings
+![Profile Settings](screenshots/profile-settings.png)
+
 📦 API Endpoints
 -----------------
 
